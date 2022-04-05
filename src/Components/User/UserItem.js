@@ -15,6 +15,7 @@ class UserItem extends Component {
           <a
             href={this.props.user.html_url}
             className="btn btn-dark btn-sm my-1"
+            target="_blank"
           >
             Github Profile
           </a>

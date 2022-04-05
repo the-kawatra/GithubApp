@@ -16,10 +16,6 @@ class Search extends Component {
   handleSubmit = async (e) => {
     this.props.searchUsers(this.state.text);
     e.preventDefault();
-    let res = await axios.get(
-      `https://api.github.com/search/users?q=${this.state.text}`
-    );
-    console.log(res.data);
   };
 
   render() {
