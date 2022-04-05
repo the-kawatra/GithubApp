@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UserItem from './UserItem';
 import axios from 'axios';
 import Spinner from '../Layout/Spinner';
+import Search from './Search';
 
 class Users extends Component {
     constructor(props) {
@@ -25,17 +26,18 @@ class Users extends Component {
           gridTemplateColumns: "repeat(3,1fr)",
           gridGap: "1rem"
       }
-    return (
-        this.state.loading ? (
-            <Spinner />
-            ) : (
+    return this.state.loading ? (
+        <Spinner />
+        ) : (
+        <>
+            <Search />
             <div style={userStyle}>
                 {this.state.users.map((user) => (
                     <UserItem user={user} key={user.id} />
                 ))}
-            </div>)
-          
-    );
+            </div>
+        </>
+    )
   }
 }
 
