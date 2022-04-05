@@ -19,6 +19,10 @@ class Users extends Component {
             loading: false
         });
     }
+
+    searchUsers = (query) => {
+        console.log(query);
+    };
     
   render() {
       const userStyle = {
@@ -30,7 +34,7 @@ class Users extends Component {
         <Spinner />
         ) : (
         <>
-            <Search />
+            <Search searchUsers={this.searchUsers} />
             <div style={userStyle}>
                 {this.state.users.map((user) => (
                     <UserItem user={user} key={user.id} />
