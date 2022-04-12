@@ -50,6 +50,13 @@ class App extends Component {
     });
   };
 
+  resetUserInfo = () => {
+    this.setState({
+      user: {},
+      repos: [],
+    })
+  }
+
   render() {
     return (
       <Router>
@@ -69,6 +76,7 @@ class App extends Component {
                     repos={this.state.repos}
                     getUserInfo={this.getUserInfo}
                     loading={this.state.loading}
+                    resetUserInfo={this.resetUserInfo}
                     {...props}
                   />
                 )}

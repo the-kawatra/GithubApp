@@ -8,6 +8,10 @@ class User extends Component {
     this.props.getUserInfo(this.props.match.params.id);
   }
 
+  componentWillUnmount() {
+    this.props.resetUserInfo();
+  }
+
   render() {
     return this.props.loading ? (
       <Spinner />
