@@ -1,22 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   render() {
     return <nav className='navbar bg-primary'>
-        <a href="/">
+        <Link to="/">
             <h1>
                 <i className={this.props.logo}></i> {this.props.appName}
             </h1>
-        </a>
+        </Link>
         <ul>
             <li>
-                <a href='/home'>Home</a>
+                <Link to='/'>Home</Link>
             </li>
             <li>
-                <a href='/about'>About</a>
-            </li>
-            <li>
-                <a href='/users'>Users</a>
+                <Link to='/about'>About</Link>
             </li>
         </ul>
     </nav>

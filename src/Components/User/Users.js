@@ -10,13 +10,14 @@ class Users extends Component {
       gridGap: "1rem",
     };
     return this.props.loading ? (
-      <Spinner />) : (
+      <Spinner />
+    ) : (
       <div style={userStyle}>
         {this.props.users.map((user) => (
           <UserItem user={user} key={user.id} />
         ))}
       </div>
-      );
+    );
   }
 }
 

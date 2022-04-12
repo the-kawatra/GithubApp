@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class UserItem extends Component {
   render() {
@@ -12,13 +13,12 @@ class UserItem extends Component {
         />
         <h3>{this.props.user.login}</h3>
         <div>
-          <a
-            href={this.props.user.html_url}
+          <Link
+            to={`/user/${this.props.user.login}`}
             className="btn btn-dark btn-sm my-1"
-            target="_blank"
           >
             Github Profile
-          </a>
+          </Link>
         </div>
       </div>
     );
