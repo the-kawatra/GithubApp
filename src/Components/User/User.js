@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component} from "react";
 import { Link } from "react-router-dom";
+import Repos from './Repos';
 
 class User extends Component {
   constructor() {
@@ -93,6 +94,7 @@ class User extends Component {
             Public Gists : {this.state.user.public_gists}
           </div>
         </div>
+        <Repos repos={this.state.repos} />
       </div>
     );
   }
