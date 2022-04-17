@@ -1,23 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 
-class RepoItem extends Component {
-  render() {
-    return (
-      <div className="card">
-        <a href={this.props.html_url} target="_blank" rel="noreferrer">
-          {this.props.name}
-        </a>
-      </div>
-    );
-  }
-}
+const RepoItem = (props) => {
+  return (
+    <div className="card">
+      <a href={props.html_url} target="_blank" rel="noreferrer">
+        {props.name}
+      </a>
+    </div>
+  );
+};
 
-class Repos extends Component {
-  render() {
-    return this.props.repos.map((repo) => {
-        return <RepoItem name={repo.name} html_url={repo.html_url} />;
-    });
-  }
-}
+const Repos = (props) => {
+  return props.repos.map((repo) => {
+    return <RepoItem name={repo.name} html_url={repo.html_url} key={repo.id} />;
+  });
+};
 
 export default Repos;

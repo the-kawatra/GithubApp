@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Layout/Navbar";
@@ -9,91 +9,91 @@ import About from "./Components/Layout/About";
 import NotFound from "./Components/Layout/NotFound";
 import axios from "axios";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      users: [],
-      loading: true,
-      user: {},
-      repos: [],
-    };
-  }
+const App = () => {
+  const [appData, setAppData] = useState({
+    users: [],
+    loading: true,
+    user: {},
+    repos: [],
+  });
 
-  async componentDidMount() {
-    let res = await axios.get("https://api.github.com/users");
-    this.setState({
-      users: res.data,
-      loading: false,
+  useEffect(() => {
+    axios.get("https://api.github.com/users").then((res) => {
+      setAppData({
+        ...appData,
+        users: res.data,
+        loading: false
+      });
     });
-  }
+  }, []);
 
-  searchUsers = async (query) => {
-    this.setState({ loading: true });
+  const searchUsers = async (query) => {
+    setAppData({ loading: true });
     let res = await axios.get(`https://api.github.com/search/users?q=${query}`);
-    this.setState({
+    setAppData({
+      ...appData,
       users: res.data.items,
       loading: false,
     });
   };
 
-  getUserInfo = async (username) => {
-    this.setState({ loading: true });
+  const getUserInfo = async (username) => {
+    setAppData({...appData, loading: true });
     let user = await axios.get(`https://api.github.com/users/${username}`);
     let repos = await axios.get(
       `https://api.github.com/users/${username}/repos`
     );
-    this.setState({
+    setAppData({
+      ...appData,
       user: user.data,
       repos: repos.data,
       loading: false,
     });
   };
-
-  resetUserInfo = () => {
-    this.setState({
+  
+  const resetUserInfo = () => {
+    setAppData({
+      ...appData,
       user: {},
       repos: [],
     })
   }
 
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <Navbar logo="fa-brands fa-github" appName="Github App" />
-          <div className="container">
-            <Switch>
-              <Route exact path="/about">
-                <About />
-              </Route>
-              <Route
-                exact
-                path="/user/:id"
-                render={(props) => (
-                  <User
-                    user={this.state.user}
-                    repos={this.state.repos}
-                    getUserInfo={this.getUserInfo}
-                    loading={this.state.loading}
-                    resetUserInfo={this.resetUserInfo}
-                    {...props}
-                  />
-                )}
-              />
-              <Route exact path="/">
-                <Search searchUsers={this.searchUsers} />
-                <Users users={this.state.users} loading={this.state.loading} />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </div>
+  return (
+    <Router>
+      <div className="App">
+        <Navbar logo="fa-brands fa-github" appName="Github App" />
+        <div className="container">
+          <Switch>
+            <Route exact path="/about">
+              <About />
+            </Route>
+            <Route
+              exact
+              path="/user/:id"
+              render={(props) => (
+                <User
+                  user={appData.user}
+                  repos={appData.repos}
+                  getUserInfo={getUserInfo}
+                  loading={appData.loading}
+                  resetUserInfo={resetUserInfo}
+                  {...props}
+                />
+              )}
+            />
+            <Route exact path="/">
+              <Search searchUsers={searchUsers} />
+              <Users users={appData.users} loading={appData.loading} />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
         </div>
-      </Router>
-    );
-  }
+      </div>
+    </Router>
+  );
 }
 
 export default App;
