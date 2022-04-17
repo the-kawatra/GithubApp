@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Layout/Navbar";
-import Search from "./Components/User/Search";
-import Users from "./Components/User/Users";
+import AllUsers from "./Components/User/AllUsers";
 import User from "./Components/User/User";
 import About from "./Components/Layout/About";
 import NotFound from "./Components/Layout/NotFound";
@@ -17,15 +16,15 @@ const App = () => {
     repos: [],
   });
 
-  useEffect(() => {
+  const getAllUsers = () => {
     axios.get("https://api.github.com/users").then((res) => {
       setAppData({
         ...appData,
         users: res.data,
-        loading: false
+        loading: false,
       });
     });
-  }, []);
+  };
 
   const searchUsers = async (query) => {
     setAppData({ loading: true });
@@ -38,7 +37,7 @@ const App = () => {
   };
 
   const getUserInfo = async (username) => {
-    setAppData({...appData, loading: true });
+    setAppData({ ...appData, loading: true });
     let user = await axios.get(`https://api.github.com/users/${username}`);
     let repos = await axios.get(
       `https://api.github.com/users/${username}/repos`
@@ -50,14 +49,14 @@ const App = () => {
       loading: false,
     });
   };
-  
+
   const resetUserInfo = () => {
     setAppData({
       ...appData,
       user: {},
       repos: [],
-    })
-  }
+    });
+  };
 
   return (
     <Router>
@@ -83,8 +82,12 @@ const App = () => {
               )}
             />
             <Route exact path="/">
-              <Search searchUsers={searchUsers} />
-              <Users users={appData.users} loading={appData.loading} />
+              <AllUsers
+                searchUsers={searchUsers}
+                users={appData.users}
+                loading={appData.loading}
+                getAllUsers={getAllUsers}
+              />
             </Route>
             <Route>
               <NotFound />
@@ -94,6 +97,6 @@ const App = () => {
       </div>
     </Router>
   );
-}
+};
 
 export default App;
