@@ -6,7 +6,7 @@ import AllUsers from "./Components/User/AllUsers";
 import User from "./Components/User/User";
 import About from "./Components/Layout/About";
 import NotFound from "./Components/Layout/NotFound";
-import GithubContext from "./Context/GithubContext";
+import GithubState from "./Context/GithubState";
 import axios from "axios";
 
 const App = () => {
@@ -60,9 +60,7 @@ const App = () => {
   };
 
   return (
-    <GithubContext.Provider
-      value={{ ...appData, getAllUsers, searchUsers, getUserInfo, resetUserInfo }}
-    >
+    <GithubState >
       <Router>
         <div className="App">
           <Navbar logo="fa-brands fa-github" appName="Github App" />
@@ -95,7 +93,7 @@ const App = () => {
           </div>
         </div>
       </Router>
-    </GithubContext.Provider>
+    </GithubState>
   );
 };
 
