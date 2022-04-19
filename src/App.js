@@ -6,6 +6,7 @@ import AllUsers from "./Components/User/AllUsers";
 import User from "./Components/User/User";
 import About from "./Components/Layout/About";
 import NotFound from "./Components/Layout/NotFound";
+import ThemeContext from "./Context/ThemeContext";
 import axios from "axios";
 
 const App = () => {
@@ -59,43 +60,47 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div className="App">
-        <Navbar logo="fa-brands fa-github" appName="Github App" />
-        <div className="container">
-          <Switch>
-            <Route exact path="/about">
-              <About />
-            </Route>
-            <Route
-              exact
-              path="/user/:id"
-              render={(props) => (
-                <User
-                  user={appData.user}
-                  repos={appData.repos}
-                  getUserInfo={getUserInfo}
-                  loading={appData.loading}
-                  resetUserInfo={resetUserInfo}
-                  {...props}
-                />
-              )}
-            />
-            <Route exact path="/">
-              <AllUsers
-                searchUsers={searchUsers}
-                users={appData.users}
-                loading={appData.loading}
-                getAllUsers={getAllUsers}
+    <ThemeContext.Provider
+      value={{ foreground: "#f4f4f4", background: "#222222" }}
+    >
+      <Router>
+        <div className="App">
+          <Navbar logo="fa-brands fa-github" appName="Github App" />
+          <div className="container">
+            <Switch>
+              <Route exact path="/about">
+                <About />
+              </Route>
+              <Route
+                exact
+                path="/user/:id"
+                render={(props) => (
+                  <User
+                    user={appData.user}
+                    repos={appData.repos}
+                    getUserInfo={getUserInfo}
+                    loading={appData.loading}
+                    resetUserInfo={resetUserInfo}
+                    {...props}
+                  />
+                )}
               />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
+              <Route exact path="/">
+                <AllUsers
+                  searchUsers={searchUsers}
+                  users={appData.users}
+                  loading={appData.loading}
+                  getAllUsers={getAllUsers}
+                />
+              </Route>
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </ThemeContext.Provider>
   );
 };
 
