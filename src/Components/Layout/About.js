@@ -1,27 +1,36 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 
 const About = () => {
-  const [state, setState] = useState({ count: 0, fruit: "Banana" });
-
-  function increaseCount() {
-    setState((prevState) => {
-      return { ...prevState, count: prevState.count + 1 };
-    });
+  function reducer(state, action) {
+    switch (action.type) {
+      case "INCREMENT":
+        return {count: state.count + 1};
+      case "DECREMENT":
+        return {count: state.count - 1};
+      default:
+        throw Error("State Logic is Messed Up");
+    }
   }
-  function decreaseCount() {
-    setState((prevState) => {
-      return { ...prevState, count: prevState.count - 1 };
-    });
-  }
-
+  const [appState, dispatch] = useReducer(reducer, { count: 0 });
   return (
     <div>
-      <h1>About Page</h1>
-      <p>Something About Us</p>
-      <p>The count is {state.count}</p>
-      <button onClick={increaseCount}>Increase</button>
-      <br />
-      <button onClick={decreaseCount}>Decrease</button>
+      <p>You clicked {appState.count} times</p>
+      <button
+        style={{ width: "50px" }}
+        onClick={() => {
+          dispatch({ type: "INCREMENT" });
+        }}
+      >
+        +
+      </button>
+      <button
+        style={{ width: "50px" }}
+        onClick={() => {
+          dispatch({ type: "DECREMENT" });
+        }}
+      >
+        -
+      </button>
     </div>
   );
 };
