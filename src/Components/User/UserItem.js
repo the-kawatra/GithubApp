@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import GithubContext from "../../Context/GithubContext";
 
 const UserItem = (props) => {
+  const userTheme = useContext(GithubContext);
+
   return (
-    <div className="card text-center">
+    <div
+      style={{ background: userTheme.background, color: userTheme.foreground }}
+      className="card text-center"
+    >
       <img
         src={props.user.avatar_url}
         alt="User Image"
@@ -21,6 +27,6 @@ const UserItem = (props) => {
       </div>
     </div>
   );
-}
+};
 
 export default UserItem;

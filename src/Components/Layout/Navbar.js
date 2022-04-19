@@ -1,12 +1,10 @@
-import React, {useContext} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import ThemeContext from "../../Context/ThemeContext";
 
 const Navbar = (props) => {
-   const theme = useContext(ThemeContext);
 
   return (
-    <nav style={{background: theme.background, color: theme.foreground}} className="navbar">
+    <nav className="navbar bg-primary">
       <Link to="/">
         <h1>
           <i className={props.logo}></i> {props.appName}

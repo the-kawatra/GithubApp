@@ -1,16 +1,18 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useContext } from "react";
 import Users from "./Users";
 import Search from "./Search";
+import GithubContext from "../../Context/GithubContext";
 
-const AllUsers = (props) => {
+const AllUsers = () => {
+  const { getAllUsers } = useContext(GithubContext);
   useEffect(() => {
-    props.getAllUsers();
+    getAllUsers();
   }, []);
 
   return (
     <>
-      <Search searchUsers={props.searchUsers} />
-      <Users loading={props.loading} users={props.users} />
+      <Search />
+      <Users />
     </>
   );
 };

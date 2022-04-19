@@ -6,7 +6,7 @@ import AllUsers from "./Components/User/AllUsers";
 import User from "./Components/User/User";
 import About from "./Components/Layout/About";
 import NotFound from "./Components/Layout/NotFound";
-import ThemeContext from "./Context/ThemeContext";
+import GithubContext from "./Context/GithubContext";
 import axios from "axios";
 
 const App = () => {
@@ -60,8 +60,8 @@ const App = () => {
   };
 
   return (
-    <ThemeContext.Provider
-      value={{ foreground: "#f4f4f4", background: "#222222" }}
+    <GithubContext.Provider
+      value={{ ...appData, getAllUsers, searchUsers, getUserInfo, resetUserInfo }}
     >
       <Router>
         <div className="App">
@@ -86,12 +86,7 @@ const App = () => {
                 )}
               />
               <Route exact path="/">
-                <AllUsers
-                  searchUsers={searchUsers}
-                  users={appData.users}
-                  loading={appData.loading}
-                  getAllUsers={getAllUsers}
-                />
+                <AllUsers />
               </Route>
               <Route>
                 <NotFound />
@@ -100,7 +95,7 @@ const App = () => {
           </div>
         </div>
       </Router>
-    </ThemeContext.Provider>
+    </GithubContext.Provider>
   );
 };
 
