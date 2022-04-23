@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import githubReducer from "./GithubReducer";
 import GithubContext from "./GithubContext";
 import axios from "axios";
-import { ALL_USERS } from "./types";
+import { ALL_USERS, RESET_INFO, SET_LOADING, SET_USER } from "./types";
 
 const GithubState = (props) => {
   const initialState = {
@@ -18,8 +18,32 @@ const GithubState = (props) => {
     });
   };
 
+  const searchUsers = async (query) => {
+    dispatch({ type: SET_LOADING });
+    let res = await axios.get(`https://api.github.com/search/users?q=${query}`);
+    dispatch({ type: ALL_USERS, payload: res.data.items });
+  };
+
+  const getUserInfo = async (username) => {
+    dispatch({ type: SET_LOADING });
+    let user = await axios.get(`https://api.github.com/users/${username}`);
+    let repos = await axios.get(
+      `https://api.github.com/users/${username}/repos`
+    );
+    dispatch({
+      type: SET_USER,
+      payload: { user: user.data, repos: repos.data },
+    });
+  };
+
+  const resetUserInfo = () => {
+    dispatch({ type: RESET_INFO });
+  };
+
   return (
-    <GithubContext.Provider value={{ ...state, getAllUsers }}>
+    <GithubContext.Provider
+      value={{ ...state, getAllUsers, searchUsers, getUserInfo, resetUserInfo }}
+    >
       {props.children}
     </GithubContext.Provider>
   );

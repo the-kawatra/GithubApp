@@ -17,26 +17,6 @@ const App = () => {
     repos: [],
   });
 
-  const getAllUsers = () => {
-    axios.get("https://api.github.com/users").then((res) => {
-      setAppData({
-        ...appData,
-        users: res.data,
-        loading: false,
-      });
-    });
-  };
-
-  const searchUsers = async (query) => {
-    setAppData({ loading: true });
-    let res = await axios.get(`https://api.github.com/search/users?q=${query}`);
-    setAppData({
-      ...appData,
-      users: res.data.items,
-      loading: false,
-    });
-  };
-
   const getUserInfo = async (username) => {
     setAppData({ ...appData, loading: true });
     let user = await axios.get(`https://api.github.com/users/${username}`);
