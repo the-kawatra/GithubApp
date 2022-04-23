@@ -6,8 +6,10 @@ import AllUsers from "./Components/User/AllUsers";
 import User from "./Components/User/User";
 import About from "./Components/Layout/About";
 import NotFound from "./Components/Layout/NotFound";
-import GithubState from "./Context/GithubState";
 import axios from "axios";
+
+import GithubState from "./Context/Github/GithubState";
+import AlertState from "./Context/Alert/AlertState";
 
 const App = () => {
   const [appData, setAppData] = useState({
@@ -40,40 +42,42 @@ const App = () => {
   };
 
   return (
-    <GithubState >
-      <Router>
-        <div className="App">
-          <Navbar logo="fa-brands fa-github" appName="Github App" />
-          <div className="container">
-            <Switch>
-              <Route exact path="/about">
-                <About />
-              </Route>
-              <Route
-                exact
-                path="/user/:id"
-                render={(props) => (
-                  <User
-                    user={appData.user}
-                    repos={appData.repos}
-                    getUserInfo={getUserInfo}
-                    loading={appData.loading}
-                    resetUserInfo={resetUserInfo}
-                    {...props}
-                  />
-                )}
-              />
-              <Route exact path="/">
-                <AllUsers />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
+    <AlertState>
+      <GithubState>
+        <Router>
+          <div className="App">
+            <Navbar logo="fa-brands fa-github" appName="Github App" />
+            <div className="container">
+              <Switch>
+                <Route exact path="/about">
+                  <About />
+                </Route>
+                <Route
+                  exact
+                  path="/user/:id"
+                  render={(props) => (
+                    <User
+                      user={appData.user}
+                      repos={appData.repos}
+                      getUserInfo={getUserInfo}
+                      loading={appData.loading}
+                      resetUserInfo={resetUserInfo}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route exact path="/">
+                  <AllUsers />
+                </Route>
+                <Route>
+                  <NotFound />
+                </Route>
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
-    </GithubState>
+        </Router>
+      </GithubState>
+    </AlertState>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import GithubContext from "../../Context/GithubContext";
+import GithubContext from "../../Context/Github/GithubContext";
 
 const UserItem = (props) => {
   const userTheme = useContext(GithubContext);

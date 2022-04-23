@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import GithubContext from "../../Context/GithubContext";
+import GithubContext from "../../Context/Github/GithubContext";
 
 const Search = () => {
   const { searchUsers } = useContext(GithubContext);
@@ -13,7 +13,6 @@ const Search = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text === "") {
-      alert("Please enter some text in Search Bar");
     } else {
       searchUsers(text);
     }

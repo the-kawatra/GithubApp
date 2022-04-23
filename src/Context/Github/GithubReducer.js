@@ -1,4 +1,10 @@
-import { ALL_USERS, RESET_INFO, SET_LOADING, SET_USER } from "./types";
+import {
+  ALL_USERS,
+  RESET_INFO,
+  RESET_LOADING,
+  SET_LOADING,
+  SET_USER,
+} from "../types";
 
 const githubReducer = (state, action) => {
   switch (action.type) {
@@ -19,6 +25,11 @@ const githubReducer = (state, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case RESET_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
     case RESET_INFO:
       return {
